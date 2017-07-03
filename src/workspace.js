@@ -135,6 +135,10 @@ export class Workspace {
         return this._client.get('/v1/workspaces/' + this.name + '/connectors', filter);
     }
 
+    uploadConnector(model) {
+        return this._client.post(`/v1/workspaces/${this.name}/connectors`, model);
+    }
+
     getConnector(id) {
         return this._client.get('/v1/workspaces/' + this.name + '/connectors/' + id, {}).then(res => res.result);
     }
