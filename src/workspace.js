@@ -139,6 +139,10 @@ export class Workspace {
         return this._client.post(`/v1/workspaces/${this.name}/connectors`, model);
     }
 
+    removeConnector(id) {
+        return this._client.del(`/v1/workspaces/${this.name}/connectors/${id}`);
+    }
+
     getConnector(id) {
         return this._client.get('/v1/workspaces/' + this.name + '/connectors/' + id, {}).then(res => res.result);
     }
