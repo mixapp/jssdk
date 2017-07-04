@@ -8,6 +8,8 @@ export class Workspace {
             value: client
         });
 
+
+
         Object.defineProperty(this, 'storages', {
             enumerable: false,
             value: {
@@ -61,6 +63,15 @@ export class Workspace {
                         .then(res => {
                             return new Process(res.result, this.name, this._client);
                         });
+                }
+            }
+        });
+
+        Object.defineProperty(this, 'marketplace', {
+            enumerable: false,
+            value: {
+                getConnectors: (skip, limit) => {
+                    return this._client.get(`/v1/workspaces/${this.name}/marketplace/connectors`, {skip, limit});
                 }
             }
         });

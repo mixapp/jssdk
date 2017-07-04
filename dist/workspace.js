@@ -82,6 +82,15 @@ var Workspace = exports.Workspace = function () {
             }
         });
 
+        Object.defineProperty(this, 'marketplace', {
+            enumerable: false,
+            value: {
+                getConnectors: function getConnectors(skip, limit) {
+                    return _this._client.get('/v1/workspaces/' + _this.name + '/marketplace/connectors', { skip: skip, limit: limit });
+                }
+            }
+        });
+
         this.name = params.name;
         this.title = params.title;
         this.plan = params.plan;
