@@ -87,6 +87,9 @@ var Workspace = exports.Workspace = function () {
             value: {
                 getConnectors: function getConnectors(skip, limit) {
                     return _this._client.get('/v1/workspaces/' + _this.name + '/marketplace/connectors', { skip: skip, limit: limit });
+                },
+                installConnector: function installConnector(id) {
+                    return _this._client.post('/v1/workspaces/' + _this.name + '/marketplace/connectors/' + id + '/install', {});
                 }
             }
         });

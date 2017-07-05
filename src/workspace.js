@@ -72,6 +72,9 @@ export class Workspace {
             value: {
                 getConnectors: (skip, limit) => {
                     return this._client.get(`/v1/workspaces/${this.name}/marketplace/connectors`, {skip, limit});
+                },
+                installConnector: (id) => {
+                    return this._client.post(`/v1/workspaces/${this.name}/marketplace/connectors/${id}/install`, {});
                 }
             }
         });
