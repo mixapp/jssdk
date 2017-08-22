@@ -1,5 +1,5 @@
 export class Storage {
-    constructor(data = {}, workspace, client) {
+    constructor(data = {}, workplace, client) {
         for (let prop in data) {
             this[prop] = data[prop];
         }
@@ -9,9 +9,9 @@ export class Storage {
             value: []
         });
 
-        Object.defineProperty(this, '_workspace', {
+        Object.defineProperty(this, '_workplace', {
             enumerable: false,
-            value: workspace
+            value: workplace
         });
         Object.defineProperty(this, '_client', {
             enumerable: false,
@@ -21,7 +21,7 @@ export class Storage {
     }
 
     fetch() {
-        return this._client.get('/v1/workspaces/' + this._workspace + '/storages/' + this.name)
+        return this._client.get('/v1/workplaces/' + this._workplace + '/storages/' + this.name)
             .then(res => {
                 for (let prop in res.result) {
                     this[prop] = res.result[prop];
@@ -32,7 +32,7 @@ export class Storage {
     }
 
     update(data) {
-        return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name, data)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name, data)
             .then(res => {
                 for (let prop in res.result) {
                     this[prop] = res.result[prop];
@@ -43,20 +43,20 @@ export class Storage {
     }
 
     remove() {
-        return this._client.del('/v1/workspaces/' + this._workspace + '/storages/' + this.name);
+        return this._client.del('/v1/workplaces/' + this._workplace + '/storages/' + this.name);
     }
 
     getIndexes() {
-        return this._client.get('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/indexes');
+        return this._client.get('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes');
     }
 
     createIndex(index) {
-        return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/indexes', index);
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes', index);
     }
 
     removeIndex(name) {
         name = name.toLowerCase();
-        return this._client.del('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/indexes/' + name);
+        return this._client.del('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes/' + name);
     }
 
     setACL(acl) {
@@ -68,31 +68,31 @@ export class Storage {
     }
 
     getDocuments(protocol) {
-        const header = {'X-Auth-Keys': this._ACL.join(',')}
-        return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/read', protocol, header)
+        const header = {'X-Auth-Keys': this._ACL.join(',')};
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/read', protocol, header)
             .then(res => res.result);
     }
 
     createDocument(protocol) {
-        const header = {'X-Auth-Keys': this._ACL.join(',')}
-        return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/create', protocol, header)
+        const header = {'X-Auth-Keys': this._ACL.join(',')};
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/create', protocol, header)
             .then(res => res.result);
     }
 
     updateDocuments(protocol) {
-        const header = {'X-Auth-Keys': this._ACL.join(',')}
-        return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/update', protocol, header)
+        const header = {'X-Auth-Keys': this._ACL.join(',')};
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/update', protocol, header)
             .then(res => res.result);
     }
 
     removeDocuments(protocol) {
-        const header = {'X-Auth-Keys': this._ACL.join(',')}
-        return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/delete', protocol, header)
+        const header = {'X-Auth-Keys': this._ACL.join(',')};
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/delete', protocol, header)
             .then(res => res.result);
     }
 
     countDocuments(protocol) {
         const header = {'X-Auth-Keys': this._ACL.join(',')}
-        return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/count', protocol, header);
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/count', protocol, header);
     }
 }

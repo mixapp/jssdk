@@ -1,5 +1,5 @@
 import Client from './client'
-import {Workspace} from './workspace'
+import {Workplace} from './workplace'
 
 
 export class Service {
@@ -9,29 +9,29 @@ export class Service {
             value: new Client(params)
         });
 
-        this.workspaces = {
+        this.workplaces = {
             getList: (skip, limit) => {
-                return this._client.get('/v1/workspaces', {
+                return this._client.get('/v1/workplaces', {
                     skip,
                     limit
                 })
                     .then(res => {
                         res.items = res.items.map(it => {
-                            return new Workspace(it, this._client);
-                        })
+                            return new Workplace(it, this._client);
+                        });
                         return res;
                     }); 
             },
             get : (name) => {
-                return this._client.get('/v1/workspaces/' + name)
+                return this._client.get('/v1/workplaces/' + name)
                     .then(res => {
-                        return new Workspace(res.result, this._client);
+                        return new Workplace(res.result, this._client);
                     });
             },
             create: (data) => {
-                return this._client.post('/v1/workspaces', data)
+                return this._client.post('/v1/workplaces', data)
                     .then(res => {
-                        return new Workspace(res.result, this._client);
+                        return new Workplace(res.result, this._client);
                     });
             }
         };

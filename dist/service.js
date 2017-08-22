@@ -11,7 +11,7 @@ var _client = require('./client');
 
 var _client2 = _interopRequireDefault(_client);
 
-var _workspace = require('./workspace');
+var _workplace = require('./workplace');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30,26 +30,26 @@ var Service = exports.Service = function () {
             value: new _client2.default(params)
         });
 
-        this.workspaces = {
+        this.workplaces = {
             getList: function getList(skip, limit) {
-                return _this._client.get('/v1/workspaces', {
+                return _this._client.get('/v1/workplaces', {
                     skip: skip,
                     limit: limit
                 }).then(function (res) {
                     res.items = res.items.map(function (it) {
-                        return new _workspace.Workspace(it, _this._client);
+                        return new _workplace.Workplace(it, _this._client);
                     });
                     return res;
                 });
             },
             get: function get(name) {
-                return _this._client.get('/v1/workspaces/' + name).then(function (res) {
-                    return new _workspace.Workspace(res.result, _this._client);
+                return _this._client.get('/v1/workplaces/' + name).then(function (res) {
+                    return new _workplace.Workplace(res.result, _this._client);
                 });
             },
             create: function create(data) {
-                return _this._client.post('/v1/workspaces', data).then(function (res) {
-                    return new _workspace.Workspace(res.result, _this._client);
+                return _this._client.post('/v1/workplaces', data).then(function (res) {
+                    return new _workplace.Workplace(res.result, _this._client);
                 });
             }
         };

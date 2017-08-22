@@ -11,7 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Storage = exports.Storage = function () {
     function Storage() {
         var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-        var workspace = arguments[1];
+        var workplace = arguments[1];
         var client = arguments[2];
 
         _classCallCheck(this, Storage);
@@ -25,9 +25,9 @@ var Storage = exports.Storage = function () {
             value: []
         });
 
-        Object.defineProperty(this, '_workspace', {
+        Object.defineProperty(this, '_workplace', {
             enumerable: false,
-            value: workspace
+            value: workplace
         });
         Object.defineProperty(this, '_client', {
             enumerable: false,
@@ -40,7 +40,7 @@ var Storage = exports.Storage = function () {
         value: function fetch() {
             var _this = this;
 
-            return this._client.get('/v1/workspaces/' + this._workspace + '/storages/' + this.name).then(function (res) {
+            return this._client.get('/v1/workplaces/' + this._workplace + '/storages/' + this.name).then(function (res) {
                 for (var prop in res.result) {
                     _this[prop] = res.result[prop];
                 }
@@ -53,7 +53,7 @@ var Storage = exports.Storage = function () {
         value: function update(data) {
             var _this2 = this;
 
-            return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name, data).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name, data).then(function (res) {
                 for (var prop in res.result) {
                     _this2[prop] = res.result[prop];
                 }
@@ -64,23 +64,23 @@ var Storage = exports.Storage = function () {
     }, {
         key: 'remove',
         value: function remove() {
-            return this._client.del('/v1/workspaces/' + this._workspace + '/storages/' + this.name);
+            return this._client.del('/v1/workplaces/' + this._workplace + '/storages/' + this.name);
         }
     }, {
         key: 'getIndexes',
         value: function getIndexes() {
-            return this._client.get('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/indexes');
+            return this._client.get('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes');
         }
     }, {
         key: 'createIndex',
         value: function createIndex(index) {
-            return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/indexes', index);
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes', index);
         }
     }, {
         key: 'removeIndex',
         value: function removeIndex(name) {
             name = name.toLowerCase();
-            return this._client.del('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/indexes/' + name);
+            return this._client.del('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes/' + name);
         }
     }, {
         key: 'setACL',
@@ -95,7 +95,7 @@ var Storage = exports.Storage = function () {
         key: 'getDocuments',
         value: function getDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/read', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/read', protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -103,7 +103,7 @@ var Storage = exports.Storage = function () {
         key: 'createDocument',
         value: function createDocument(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/create', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/create', protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -111,7 +111,7 @@ var Storage = exports.Storage = function () {
         key: 'updateDocuments',
         value: function updateDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/update', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/update', protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -119,7 +119,7 @@ var Storage = exports.Storage = function () {
         key: 'removeDocuments',
         value: function removeDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/delete', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/delete', protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -127,7 +127,7 @@ var Storage = exports.Storage = function () {
         key: 'countDocuments',
         value: function countDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workspaces/' + this._workspace + '/storages/' + this.name + '/count', protocol, header);
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/count', protocol, header);
         }
     }]);
 

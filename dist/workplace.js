@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Workspace = undefined;
+exports.Workplace = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -15,14 +15,14 @@ var _process = require('./process');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Workspace = exports.Workspace = function () {
-    function Workspace() {
+var Workplace = exports.Workplace = function () {
+    function Workplace() {
         var _this = this;
 
         var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         var client = arguments[1];
 
-        _classCallCheck(this, Workspace);
+        _classCallCheck(this, Workplace);
 
         Object.defineProperty(this, '_client', {
             enumerable: false,
@@ -33,7 +33,7 @@ var Workspace = exports.Workspace = function () {
             enumerable: false,
             value: {
                 getAll: function getAll() {
-                    return _this._client.get('/v1/workspaces/' + _this.name + '/storages').then(function (res) {
+                    return _this._client.get('/v1/workplaces/' + _this.name + '/storages').then(function (res) {
                         return res.result.map(function (item) {
                             return new _storage.Storage(item, _this.name, _this._client);
                         });
@@ -41,13 +41,13 @@ var Workspace = exports.Workspace = function () {
                 },
 
                 create: function create(data) {
-                    return _this._client.post('/v1/workspaces/' + _this.name + '/storages', data).then(function (res) {
+                    return _this._client.post('/v1/workplaces/' + _this.name + '/storages', data).then(function (res) {
                         return new _storage.Storage(res.result, _this.name, _this._client);
                     });
                 },
 
                 get: function get(name) {
-                    return _this._client.get('/v1/workspaces/' + _this.name + '/storages/' + name).then(function (res) {
+                    return _this._client.get('/v1/workplaces/' + _this.name + '/storages/' + name).then(function (res) {
                         return new _storage.Storage(res.result, _this.name, _this._client);
                     });
                 }
@@ -58,7 +58,7 @@ var Workspace = exports.Workspace = function () {
             enumerable: false,
             value: {
                 search: function search(filter) {
-                    return _this._client.get('/v1/workspaces/' + _this.name + '/processes', filter).then(function (res) {
+                    return _this._client.get('/v1/workplaces/' + _this.name + '/processes', filter).then(function (res) {
                         return {
                             total: res.total,
                             items: res.items.map(function (item) {
@@ -69,13 +69,13 @@ var Workspace = exports.Workspace = function () {
                 },
 
                 get: function get(id) {
-                    return _this._client.get('/v1/workspaces/' + _this.name + '/processes/' + id).then(function (res) {
+                    return _this._client.get('/v1/workplaces/' + _this.name + '/processes/' + id).then(function (res) {
                         return new _process.Process(res.result, _this.name, _this._client);
                     });
                 },
 
                 create: function create(data) {
-                    return _this._client.post('/v1/workspaces/' + _this.name + '/processes', data).then(function (res) {
+                    return _this._client.post('/v1/workplaces/' + _this.name + '/processes', data).then(function (res) {
                         return new _process.Process(res.result, _this.name, _this._client);
                     });
                 }
@@ -86,10 +86,10 @@ var Workspace = exports.Workspace = function () {
             enumerable: false,
             value: {
                 getConnectors: function getConnectors(skip, limit) {
-                    return _this._client.get('/v1/workspaces/' + _this.name + '/marketplace/connectors', { skip: skip, limit: limit });
+                    return _this._client.get('/v1/workplaces/' + _this.name + '/marketplace/connectors', { skip: skip, limit: limit });
                 },
                 installConnector: function installConnector(id) {
-                    return _this._client.post('/v1/workspaces/' + _this.name + '/marketplace/connectors/' + id + '/install', {});
+                    return _this._client.post('/v1/workplaces/' + _this.name + '/marketplace/connectors/' + id + '/install', {});
                 }
             }
         });
@@ -100,17 +100,17 @@ var Workspace = exports.Workspace = function () {
         this.npm = params.npm;
     }
 
-    _createClass(Workspace, [{
+    _createClass(Workplace, [{
         key: 'stats',
         value: function stats() {
-            return this._client.get('/v1/workspaces/' + this.name + '/statistics');
+            return this._client.get('/v1/workplaces/' + this.name + '/statistics');
         }
     }, {
         key: 'fetch',
         value: function fetch() {
             var _this2 = this;
 
-            return this._client.get('/v1/workspaces/' + this.name).then(function (res) {
+            return this._client.get('/v1/workplaces/' + this.name).then(function (res) {
                 for (var prop in res.result) {
                     _this2[prop] = res.result[prop];
                 }
@@ -121,34 +121,34 @@ var Workspace = exports.Workspace = function () {
     }, {
         key: 'getBills',
         value: function getBills(skip, limit) {
-            return this._client.get('/v1/workspaces/' + this.name + '/billing', { skip: skip, limit: limit });
+            return this._client.get('/v1/workplaces/' + this.name + '/billing', { skip: skip, limit: limit });
         }
     }, {
         key: 'buyPlan',
         value: function buyPlan(plan) {
-            return this._client.post('/v1/workspaces/' + this.name + '/billing', plan).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this.name + '/billing', plan).then(function (res) {
                 return res.result;
             });
         }
     }, {
         key: 'getKeys',
         value: function getKeys() {
-            return this._client.get('/v1/workspaces/' + this.name + '/keys');
+            return this._client.get('/v1/workplaces/' + this.name + '/keys');
         }
     }, {
         key: 'createKey',
         value: function createKey(model) {
-            return this._client.post('/v1/workspaces/' + this.name + '/keys', model);
+            return this._client.post('/v1/workplaces/' + this.name + '/keys', model);
         }
     }, {
         key: 'updateKey',
         value: function updateKey(id) {
-            return this._client.post('/v1/workspaces/' + this.name + '/keys/' + id, {});
+            return this._client.post('/v1/workplaces/' + this.name + '/keys/' + id, {});
         }
     }, {
         key: 'removeKey',
         value: function removeKey(id) {
-            return this._client.del('/v1/workspaces/' + this.name + '/keys/' + id);
+            return this._client.del('/v1/workplaces/' + this.name + '/keys/' + id);
         }
     }, {
         key: 'update',
@@ -159,7 +159,7 @@ var Workspace = exports.Workspace = function () {
                 name: this.name
             }, data);
 
-            return this._client.post('/v1/workspaces/' + this.name, data).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this.name, data).then(function (res) {
                 for (var prop in res.result) {
                     _this3[prop] = res.result[prop];
                 }
@@ -170,31 +170,31 @@ var Workspace = exports.Workspace = function () {
     }, {
         key: 'remove',
         value: function remove() {
-            return this._client.del('/v1/workspaces/' + this.name);
+            return this._client.del('/v1/workplaces/' + this.name);
         }
     }, {
         key: 'getConnectors',
         value: function getConnectors(filter) {
-            return this._client.get('/v1/workspaces/' + this.name + '/connectors', filter);
+            return this._client.get('/v1/workplaces/' + this.name + '/connectors', filter);
         }
     }, {
         key: 'uploadConnector',
         value: function uploadConnector(model) {
-            return this._client.post('/v1/workspaces/' + this.name + '/connectors', model);
+            return this._client.post('/v1/workplaces/' + this.name + '/connectors', model);
         }
     }, {
         key: 'removeConnector',
         value: function removeConnector(id) {
-            return this._client.del('/v1/workspaces/' + this.name + '/connectors/' + id);
+            return this._client.del('/v1/workplaces/' + this.name + '/connectors/' + id);
         }
     }, {
         key: 'getConnector',
         value: function getConnector(id) {
-            return this._client.get('/v1/workspaces/' + this.name + '/connectors/' + id, {}).then(function (res) {
+            return this._client.get('/v1/workplaces/' + this.name + '/connectors/' + id, {}).then(function (res) {
                 return res.result;
             });
         }
     }]);
 
-    return Workspace;
+    return Workplace;
 }();
