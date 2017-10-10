@@ -1,6 +1,8 @@
 var https = null;
+var http = null;
 if (typeof XMLHttpRequest === 'undefined') {
-    https = require('http');
+    https = require('https');
+    http = require('http');
 }
 
 export default class Http {
@@ -61,7 +63,9 @@ export default class Http {
         }
 
         const promise = new Promise((resolve, reject) => {
-            const request = https.request({
+            const provider = this.port === 443 ? https : http;
+
+            const request = provider.request({
                 method: method,
                 port: this.port,
                 path: path + '?' + query,
@@ -150,7 +154,9 @@ export default class Http {
                 query = _query.join('&');
             }
 
-            let url = 'https://' + this.host + ':' + this.port + path + '?' + query;
+            var scheme = this.port == 443 ? 'https' : 'http';
+
+            let url = scheme+ '://' + this.host + ':' + this.port + path + '?' + query;
             var xhr = new XMLHttpRequest();
 
             xhr.timeout = this.timeout;
