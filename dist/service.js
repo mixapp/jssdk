@@ -48,7 +48,7 @@ var Service = exports.Service = function () {
                 });
             },
             create: function create(data) {
-                return _this._client.post('/v1/workplaces', data).then(function (res) {
+                return _this._client.post('/v1/workplaces', {}, data).then(function (res) {
                     return new _workplace.Workplace(res.result, _this._client);
                 });
             }
@@ -77,7 +77,7 @@ var Service = exports.Service = function () {
         value: function signIn(email, password) {
             var _this2 = this;
 
-            return this._client.post('/v1/signin', {
+            return this._client.post('/v1/signin', {}, {
                 email: email,
                 password: password
             }).then(function (res) {
@@ -91,7 +91,7 @@ var Service = exports.Service = function () {
         value: function signUp(data) {
             var _this3 = this;
 
-            return this._client.post('/v1/signup', data).then(function (res) {
+            return this._client.post('/v1/signup', {}, data).then(function (res) {
                 _this3._client.setToken(res.token);
 
                 return res;
@@ -100,19 +100,19 @@ var Service = exports.Service = function () {
     }, {
         key: 'update',
         value: function update(data) {
-            return this._client.post('/v1/update', data);
+            return this._client.post('/v1/update', {}, data);
         }
     }, {
         key: 'restore',
         value: function restore(email) {
-            return this._client.post('/v1/repair', {
+            return this._client.post('/v1/repair', {}, {
                 email: email
             });
         }
     }, {
         key: 'confirmRestore',
         value: function confirmRestore(token, pass) {
-            return this._client.post('/v1/repair/' + token, {
+            return this._client.post('/v1/repair/' + token, {}, {
                 password: pass
             });
         }

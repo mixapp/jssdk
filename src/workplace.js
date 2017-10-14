@@ -8,8 +8,6 @@ export class Workplace {
             value: client
         });
 
-
-
         Object.defineProperty(this, 'storages', {
             enumerable: false,
             value: {
@@ -23,7 +21,7 @@ export class Workplace {
                 },
 
                 create: (data) => {
-                    return this._client.post('/v1/workplaces/' + this.name + '/storages', data)
+                    return this._client.post('/v1/workplaces/' + this.name + '/storages', {}, data)
                         .then(res => {
                             return new Storage(res.result, this.name, this._client);
                         });
@@ -59,7 +57,7 @@ export class Workplace {
                 },
 
                 create: (data) => {
-                    return this._client.post('/v1/workplaces/' + this.name + '/processes', data)
+                    return this._client.post('/v1/workplaces/' + this.name + '/processes', {}, data)
                         .then(res => {
                             return new Process(res.result, this.name, this._client);
                         });
@@ -74,7 +72,48 @@ export class Workplace {
                     return this._client.get(`/v1/workplaces/${this.name}/marketplace/connectors`, {skip, limit});
                 },
                 installConnector: (id) => {
-                    return this._client.post(`/v1/workplaces/${this.name}/marketplace/connectors/${id}/install`, {});
+                    return this._client.post(`/v1/workplaces/${this.name}/marketplace/connectors/${id}/install`, {}, {});
+                }
+            }
+        });
+
+        Object.defineProperty(this, 'settings', {
+            enumerable: false,
+            value: {
+                oidc: {
+                    get: () => {
+                        return this._client.get(`/v1/workplaces/${this.name}/oidc`);
+                    },
+                    update: (data) => {
+                        return this._client.post(`/v1/workplaces/${this.name}/oidc`, {}, data);
+                    },
+                    refreshToken: () => {
+                        return this._client.post(`/v1/workplaces/${this.name}/oidc/token`);
+                    }
+                }
+            }
+        });
+
+        Object.defineProperty(this, 'oidc', {
+            enumerable: false,
+            value: {
+                getClients: (token) => {
+                    return this._client.get(`/oidc/${this.name}/registration`, {}, {'Authorization': `Bearer ${token}`})
+                        .then(res => {
+                            return {result: res};
+                        });
+                },
+                createClient: (token, data) => {
+                    return this._client.post(`/oidc/${this.name}/registration`, {}, data, {'Authorization': `Bearer ${token}`});
+                },
+                getClient: (token, id) => {
+                    return this._client.get(`/oidc/${this.name}/registration`, {client_id: id}, {}, {'Authorization': `Bearer ${token}`});
+                },
+                updateClient: (token, id, data) => {
+                    return this._client.post(`/oidc/${this.name}/registration`, {client_id: id}, data, {'Authorization': `Bearer ${token}`});
+                },
+                removeClient: (token, id) => {
+                    return this._client.del(`/oidc/${this.name}/registration`, {client_id: id}, {}, {'Authorization': `Bearer ${token}`});
                 }
             }
         });
@@ -106,7 +145,7 @@ export class Workplace {
     }
 
     buyPlan(plan) {
-        return this._client.post('/v1/workplaces/' + this.name + '/billing', plan).then(res => res.result);
+        return this._client.post('/v1/workplaces/' + this.name + '/billing', {}, plan).then(res => res.result);
     }
 
     getKeys() {
@@ -114,11 +153,11 @@ export class Workplace {
     }
 
     createKey(model) {
-        return this._client.post('/v1/workplaces/' + this.name + '/keys', model);
+        return this._client.post('/v1/workplaces/' + this.name + '/keys', {}, model);
     }
 
     updateKey(id) {
-        return this._client.post(`/v1/workplaces/${this.name}/keys/${id}`, {});
+        return this._client.post(`/v1/workplaces/${this.name}/keys/${id}`, {}, {});
     }
 
     removeKey(id) {
@@ -131,7 +170,7 @@ export class Workplace {
             ...data
         };
 
-        return this._client.post('/v1/workplaces/' + this.name, data)
+        return this._client.post('/v1/workplaces/' + this.name, {}, data)
             .then(res => {
                 for (let prop in res.result) {
                     this[prop] = res.result[prop];
@@ -150,7 +189,7 @@ export class Workplace {
     }
 
     uploadConnector(model) {
-        return this._client.post(`/v1/workplaces/${this.name}/connectors`, model);
+        return this._client.post(`/v1/workplaces/${this.name}/connectors`, {}, model);
     }
 
     removeConnector(id) {

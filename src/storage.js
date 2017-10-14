@@ -32,7 +32,7 @@ export class Storage {
     }
 
     update(data) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name, data)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name, {}, data)
             .then(res => {
                 for (let prop in res.result) {
                     this[prop] = res.result[prop];
@@ -51,7 +51,7 @@ export class Storage {
     }
 
     createIndex(index) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes', index);
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes', {}, index);
     }
 
     removeIndex(name) {
@@ -69,30 +69,30 @@ export class Storage {
 
     getDocuments(protocol) {
         const header = {'X-Auth-Keys': this._ACL.join(',')};
-        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/read', protocol, header)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/read', {}, protocol, header)
             .then(res => res.result);
     }
 
     createDocument(protocol) {
         const header = {'X-Auth-Keys': this._ACL.join(',')};
-        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/create', protocol, header)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/create', {}, protocol, header)
             .then(res => res.result);
     }
 
     updateDocuments(protocol) {
         const header = {'X-Auth-Keys': this._ACL.join(',')};
-        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/update', protocol, header)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/update', {}, protocol, header)
             .then(res => res.result);
     }
 
     removeDocuments(protocol) {
         const header = {'X-Auth-Keys': this._ACL.join(',')};
-        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/delete', protocol, header)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/delete', {}, protocol, header)
             .then(res => res.result);
     }
 
     countDocuments(protocol) {
         const header = {'X-Auth-Keys': this._ACL.join(',')}
-        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/count', protocol, header);
+        return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/count', {}, protocol, header);
     }
 }

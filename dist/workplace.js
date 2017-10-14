@@ -41,7 +41,7 @@ var Workplace = exports.Workplace = function () {
                 },
 
                 create: function create(data) {
-                    return _this._client.post('/v1/workplaces/' + _this.name + '/storages', data).then(function (res) {
+                    return _this._client.post('/v1/workplaces/' + _this.name + '/storages', {}, data).then(function (res) {
                         return new _storage.Storage(res.result, _this.name, _this._client);
                     });
                 },
@@ -75,7 +75,7 @@ var Workplace = exports.Workplace = function () {
                 },
 
                 create: function create(data) {
-                    return _this._client.post('/v1/workplaces/' + _this.name + '/processes', data).then(function (res) {
+                    return _this._client.post('/v1/workplaces/' + _this.name + '/processes', {}, data).then(function (res) {
                         return new _process.Process(res.result, _this.name, _this._client);
                     });
                 }
@@ -89,7 +89,47 @@ var Workplace = exports.Workplace = function () {
                     return _this._client.get('/v1/workplaces/' + _this.name + '/marketplace/connectors', { skip: skip, limit: limit });
                 },
                 installConnector: function installConnector(id) {
-                    return _this._client.post('/v1/workplaces/' + _this.name + '/marketplace/connectors/' + id + '/install', {});
+                    return _this._client.post('/v1/workplaces/' + _this.name + '/marketplace/connectors/' + id + '/install', {}, {});
+                }
+            }
+        });
+
+        Object.defineProperty(this, 'settings', {
+            enumerable: false,
+            value: {
+                oidc: {
+                    get: function get() {
+                        return _this._client.get('/v1/workplaces/' + _this.name + '/oidc');
+                    },
+                    update: function update(data) {
+                        return _this._client.post('/v1/workplaces/' + _this.name + '/oidc', {}, data);
+                    },
+                    refreshToken: function refreshToken() {
+                        return _this._client.post('/v1/workplaces/' + _this.name + '/oidc/token');
+                    }
+                }
+            }
+        });
+
+        Object.defineProperty(this, 'oidc', {
+            enumerable: false,
+            value: {
+                getClients: function getClients(token) {
+                    return _this._client.get('/oidc/' + _this.name + '/registration', {}, { 'Authorization': 'Bearer ' + token }).then(function (res) {
+                        return { result: res };
+                    });
+                },
+                createClient: function createClient(token, data) {
+                    return _this._client.post('/oidc/' + _this.name + '/registration', {}, data, { 'Authorization': 'Bearer ' + token });
+                },
+                getClient: function getClient(token, id) {
+                    return _this._client.get('/oidc/' + _this.name + '/registration', { client_id: id }, {}, { 'Authorization': 'Bearer ' + token });
+                },
+                updateClient: function updateClient(token, id, data) {
+                    return _this._client.post('/oidc/' + _this.name + '/registration', { client_id: id }, data, { 'Authorization': 'Bearer ' + token });
+                },
+                removeClient: function removeClient(token, id) {
+                    return _this._client.del('/oidc/' + _this.name + '/registration', { client_id: id }, {}, { 'Authorization': 'Bearer ' + token });
                 }
             }
         });
@@ -126,7 +166,7 @@ var Workplace = exports.Workplace = function () {
     }, {
         key: 'buyPlan',
         value: function buyPlan(plan) {
-            return this._client.post('/v1/workplaces/' + this.name + '/billing', plan).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this.name + '/billing', {}, plan).then(function (res) {
                 return res.result;
             });
         }
@@ -138,12 +178,12 @@ var Workplace = exports.Workplace = function () {
     }, {
         key: 'createKey',
         value: function createKey(model) {
-            return this._client.post('/v1/workplaces/' + this.name + '/keys', model);
+            return this._client.post('/v1/workplaces/' + this.name + '/keys', {}, model);
         }
     }, {
         key: 'updateKey',
         value: function updateKey(id) {
-            return this._client.post('/v1/workplaces/' + this.name + '/keys/' + id, {});
+            return this._client.post('/v1/workplaces/' + this.name + '/keys/' + id, {}, {});
         }
     }, {
         key: 'removeKey',
@@ -159,7 +199,7 @@ var Workplace = exports.Workplace = function () {
                 name: this.name
             }, data);
 
-            return this._client.post('/v1/workplaces/' + this.name, data).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this.name, {}, data).then(function (res) {
                 for (var prop in res.result) {
                     _this3[prop] = res.result[prop];
                 }
@@ -180,7 +220,7 @@ var Workplace = exports.Workplace = function () {
     }, {
         key: 'uploadConnector',
         value: function uploadConnector(model) {
-            return this._client.post('/v1/workplaces/' + this.name + '/connectors', model);
+            return this._client.post('/v1/workplaces/' + this.name + '/connectors', {}, model);
         }
     }, {
         key: 'removeConnector',

@@ -41,7 +41,7 @@ export default class Http {
     setTimeout() {}
 
 
-    _node_request(method, path, data = {}, headers) {
+    _node_request(method, path, params = {}, data = {}, headers) {
 
         headers = {
             ...this.headers,
@@ -53,10 +53,10 @@ export default class Http {
         }
 
         var query = '';
-        if (method.toLowerCase() === 'get') {
+        if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
             let _query = [];
-            for (let prop in data) {
-                _query.push(prop + '=' + data[prop])
+            for (let prop in params) {
+                _query.push(prop + '=' + params[prop])
             }
 
             query = _query.join('&');
@@ -73,7 +73,7 @@ export default class Http {
                 headers: headers
             }, function(res) {
                 let result = "";
-                if (res.statusCode !== 200) {
+                if (res.statusCode !== 200 && res.statusCode !== 201) {
                     return reject({
                         error_code     : res.statusCode,
                         error_message      : res.responseText || 'Invalid statusCode'
@@ -135,20 +135,27 @@ export default class Http {
                     return Promise.reject(res);
                 }
 
+                if (res.error) {
+                    return Promise.reject({
+                        error_code     : 500,
+                        error_message      : res.error_description
+                    });
+                }
+
                 return res;
             });
 
         return promise
 
     }
-    _ajax(method, path, data, headers) {
+    _ajax(method, path, params, data, headers) {
         const promise = new Promise((resolve, reject) => {
 
             var query = '';
-            if (method.toLowerCase() === 'get') {
+            if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
                 let _query = [];
-                for (let prop in data) {
-                    _query.push(prop + '=' + data[prop])
+                for (let prop in params) {
+                    _query.push(prop + '=' + params[prop])
                 }
 
                 query = _query.join('&');
@@ -177,7 +184,7 @@ export default class Http {
             xhr.onreadystatechange = () => {
                 if (xhr.readyState != 4) return;
 
-                if (xhr.status != 200) {
+                if (xhr.status != 200 && xhr.status != 201) {
                     
                     return reject({
                         error_code     : xhr.status,
@@ -203,17 +210,24 @@ export default class Http {
                     return Promise.reject(res);
                 }
 
+                if (res.error) {
+                    return Promise.reject({
+                        error_code     : 500,
+                        error_message  : res.error_description
+                    });
+                }
+
                 return res;
             });
 
         return promise;
     }
 
-    _request(method, path, data, headers) {
+    _request(method, path, params, data, headers) {
         if (typeof XMLHttpRequest !== 'undefined') {
-            return this._ajax(method, path, data, headers);
+            return this._ajax(method, path, params, data, headers);
         }
-        return this._node_request(method, path, data, headers);
+        return this._node_request(method, path, params, data, headers);
     }
 
 

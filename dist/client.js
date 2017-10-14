@@ -60,10 +60,12 @@ var Http = function () {
     }, {
         key: '_node_request',
         value: function _node_request(method, path) {
+            var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
             var _this = this;
 
-            var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-            var headers = arguments[3];
+            var data = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+            var headers = arguments[4];
 
 
             headers = _extends({}, this.headers, headers);
@@ -73,10 +75,10 @@ var Http = function () {
             }
 
             var query = '';
-            if (method.toLowerCase() === 'get') {
+            if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
                 var _query = [];
-                for (var prop in data) {
-                    _query.push(prop + '=' + data[prop]);
+                for (var prop in params) {
+                    _query.push(prop + '=' + params[prop]);
                 }
 
                 query = _query.join('&');
@@ -93,7 +95,7 @@ var Http = function () {
                     headers: headers
                 }, function (res) {
                     var result = "";
-                    if (res.statusCode !== 200) {
+                    if (res.statusCode !== 200 && res.statusCode !== 201) {
                         return reject({
                             error_code: res.statusCode,
                             error_message: res.responseText || 'Invalid statusCode'
@@ -153,6 +155,13 @@ var Http = function () {
                     return Promise.reject(res);
                 }
 
+                if (res.error) {
+                    return Promise.reject({
+                        error_code: 500,
+                        error_message: res.error_description
+                    });
+                }
+
                 return res;
             });
 
@@ -160,16 +169,16 @@ var Http = function () {
         }
     }, {
         key: '_ajax',
-        value: function _ajax(method, path, data, headers) {
+        value: function _ajax(method, path, params, data, headers) {
             var _this2 = this;
 
             var promise = new Promise(function (resolve, reject) {
 
                 var query = '';
-                if (method.toLowerCase() === 'get') {
+                if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
                     var _query = [];
-                    for (var prop in data) {
-                        _query.push(prop + '=' + data[prop]);
+                    for (var prop in params) {
+                        _query.push(prop + '=' + params[prop]);
                     }
 
                     query = _query.join('&');
@@ -198,7 +207,7 @@ var Http = function () {
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState != 4) return;
 
-                    if (xhr.status != 200) {
+                    if (xhr.status != 200 && xhr.status != 201) {
 
                         return reject({
                             error_code: xhr.status,
@@ -221,6 +230,13 @@ var Http = function () {
                     return Promise.reject(res);
                 }
 
+                if (res.error) {
+                    return Promise.reject({
+                        error_code: 500,
+                        error_message: res.error_description
+                    });
+                }
+
                 return res;
             });
 
@@ -228,11 +244,11 @@ var Http = function () {
         }
     }, {
         key: '_request',
-        value: function _request(method, path, data, headers) {
+        value: function _request(method, path, params, data, headers) {
             if (typeof XMLHttpRequest !== 'undefined') {
-                return this._ajax(method, path, data, headers);
+                return this._ajax(method, path, params, data, headers);
             }
-            return this._node_request(method, path, data, headers);
+            return this._node_request(method, path, params, data, headers);
         }
     }]);
 

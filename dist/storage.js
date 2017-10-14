@@ -53,7 +53,7 @@ var Storage = exports.Storage = function () {
         value: function update(data) {
             var _this2 = this;
 
-            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name, data).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name, {}, data).then(function (res) {
                 for (var prop in res.result) {
                     _this2[prop] = res.result[prop];
                 }
@@ -74,7 +74,7 @@ var Storage = exports.Storage = function () {
     }, {
         key: 'createIndex',
         value: function createIndex(index) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes', index);
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/indexes', {}, index);
         }
     }, {
         key: 'removeIndex',
@@ -95,7 +95,7 @@ var Storage = exports.Storage = function () {
         key: 'getDocuments',
         value: function getDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/read', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/read', {}, protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -103,7 +103,7 @@ var Storage = exports.Storage = function () {
         key: 'createDocument',
         value: function createDocument(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/create', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/create', {}, protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -111,7 +111,7 @@ var Storage = exports.Storage = function () {
         key: 'updateDocuments',
         value: function updateDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/update', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/update', {}, protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -119,7 +119,7 @@ var Storage = exports.Storage = function () {
         key: 'removeDocuments',
         value: function removeDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/delete', protocol, header).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/delete', {}, protocol, header).then(function (res) {
                 return res.result;
             });
         }
@@ -127,7 +127,7 @@ var Storage = exports.Storage = function () {
         key: 'countDocuments',
         value: function countDocuments(protocol) {
             var header = { 'X-Auth-Keys': this._ACL.join(',') };
-            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/count', protocol, header);
+            return this._client.post('/v1/workplaces/' + this._workplace + '/storages/' + this.name + '/count', {}, protocol, header);
         }
     }]);
 

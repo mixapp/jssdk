@@ -29,7 +29,7 @@ export class Service {
                     });
             },
             create: (data) => {
-                return this._client.post('/v1/workplaces', data)
+                return this._client.post('/v1/workplaces', {}, data)
                     .then(res => {
                         return new Workplace(res.result, this._client);
                     });
@@ -50,7 +50,7 @@ export class Service {
     }
 
     signIn(email, password) {
-        return this._client.post('/v1/signin', {
+        return this._client.post('/v1/signin', {}, {
             email: email,
             password: password
         }).then(res => {
@@ -61,7 +61,7 @@ export class Service {
     }
 
     signUp(data) {
-        return this._client.post('/v1/signup', data).then(res => {
+        return this._client.post('/v1/signup', {}, data).then(res => {
             this._client.setToken(res.token);
 
             return res;
@@ -69,17 +69,17 @@ export class Service {
     }
 
     update(data) {
-        return this._client.post('/v1/update', data);
+        return this._client.post('/v1/update', {}, data);
     }
 
     restore(email) {
-        return this._client.post('/v1/repair', {
+        return this._client.post('/v1/repair', {}, {
             email: email
         });
     }
 
     confirmRestore(token, pass) {
-        return this._client.post('/v1/repair/' + token, {
+        return this._client.post('/v1/repair/' + token, {}, {
             password: pass
         });
     }

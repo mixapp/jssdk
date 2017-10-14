@@ -55,11 +55,16 @@ var Process = exports.Process = function () {
             });
         }
     }, {
+        key: 'flushLogs',
+        value: function flushLogs() {
+            return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/logs', {});
+        }
+    }, {
         key: 'update',
         value: function update(data) {
             var _this2 = this;
 
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id, data).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id, {}, data).then(function (res) {
                 for (var prop in res.result) {
                     _this2[prop] = res.result[prop];
                 }
@@ -67,33 +72,36 @@ var Process = exports.Process = function () {
             });
         }
     }, {
+        key: 'clone',
+        value: function clone(data) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/clone', {}, data);
+        }
+    }, {
         key: 'remove',
         value: function remove() {
             return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id);
         }
-    }, {
-        key: 'createVariable',
-        value: function createVariable(data) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables', data).then(function (res) {
-                return res.result;
-            });
+
+        /*createVariable(data) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables', data)
+                .then(res => {
+                    return res.result;
+                });
         }
-    }, {
-        key: 'updateVariable',
-        value: function updateVariable(name, data) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name, data).then(function (res) {
-                return res.result;
-            });
+         updateVariable(name, data) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name, data)
+                .then(res => {
+                    return res.result;
+                });
         }
-    }, {
-        key: 'removeVariable',
-        value: function removeVariable(name) {
+         removeVariable(name) {
             return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name);
-        }
+        }*/
+
     }, {
         key: 'start',
         value: function start(data) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/start', data);
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/start', {}, data);
         }
     }, {
         key: 'stop',
@@ -103,21 +111,21 @@ var Process = exports.Process = function () {
     }, {
         key: 'createConnector',
         value: function createConnector(data) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors', data).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors', {}, data).then(function (res) {
                 return res.result;
             });
         }
     }, {
         key: 'updateConnector',
         value: function updateConnector(id, data) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id, data).then(function (res) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id, {}, data).then(function (res) {
                 return res.result;
             });
         }
     }, {
         key: 'moveConnector',
         value: function moveConnector(id, x, y) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/move', {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/move', {}, {
                 positionX: x,
                 positionY: y
             });

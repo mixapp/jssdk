@@ -38,8 +38,12 @@ export class Process {
         });
     }
 
+    flushLogs() {
+        return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/logs', {});
+    }
+
     update(data) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id, data)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id, {}, data)
             .then(res => {
                 for (let prop in res.result) {
                     this[prop] = res.result[prop];
@@ -48,11 +52,15 @@ export class Process {
             });
     }
 
+    clone(data) {
+        return this._client.post(`/v1/workplaces/${this._workplace}/processes/${this.id}/clone`, {}, data);
+    }
+
     remove() {
         return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id);
     }
 
-    createVariable(data) {
+    /*createVariable(data) {
         return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables', data)
             .then(res => {
                 return res.result;
@@ -68,10 +76,10 @@ export class Process {
 
     removeVariable(name) {
         return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name);
-    }
+    }*/
 
     start(data) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/start', data);
+        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/start', {}, data);
     }
 
     stop() {
@@ -79,17 +87,17 @@ export class Process {
     }
 
     createConnector(data) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors', data)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors', {}, data)
             .then(res => res.result);
     }
 
     updateConnector(id, data) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id, data)
+        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id, {}, data)
             .then(res => res.result);
     }
 
     moveConnector(id, x, y) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/move', {
+        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/move', {}, {
             positionX: x,
             positionY: y
         });
