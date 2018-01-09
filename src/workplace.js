@@ -78,7 +78,7 @@ export class Workplace {
                     return this._client.get(`/v1/workplaces/${this.name}/marketplace/processes`, {skip, limit});
                 },
                 installProcess: (id, data = {}) => {
-                    return this._client.post(`/v1/workplaces/${this.name}/marketplace/processes/${id}/install`, data, {});
+                    return this._client.post(`/v1/workplaces/${this.name}/marketplace/processes/${id}/install`, {}, data);
                 }
             }
         });

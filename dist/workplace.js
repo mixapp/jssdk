@@ -97,7 +97,7 @@ var Workplace = exports.Workplace = function () {
                 installProcess: function installProcess(id) {
                     var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-                    return _this._client.post('/v1/workplaces/' + _this.name + '/marketplace/processes/' + id + '/install', data, {});
+                    return _this._client.post('/v1/workplaces/' + _this.name + '/marketplace/processes/' + id + '/install', {}, data);
                 }
             }
         });

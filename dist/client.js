@@ -35,8 +35,8 @@ var Http = function () {
         }
     }, {
         key: 'post',
-        value: function post(path, data, headers) {
-            return this._request('POST', path, data, headers);
+        value: function post(path, query, data, headers) {
+            return this._request('POST', path, query, data, headers);
         }
     }, {
         key: 'del',
