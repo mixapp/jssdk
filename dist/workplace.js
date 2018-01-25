@@ -131,13 +131,13 @@ var Workplace = exports.Workplace = function () {
                     return _this._client.post('/oidc/' + _this.name + '/registration', {}, data, { 'Authorization': 'Bearer ' + token });
                 },
                 getClient: function getClient(token, id) {
-                    return _this._client.get('/oidc/' + _this.name + '/registration', { client_id: id }, {}, { 'Authorization': 'Bearer ' + token });
+                    return _this._client.get('/oidc/' + _this.name + '/registration', { client_id: id }, { 'Authorization': 'Bearer ' + token });
                 },
                 updateClient: function updateClient(token, id, data) {
                     return _this._client.post('/oidc/' + _this.name + '/registration', { client_id: id }, data, { 'Authorization': 'Bearer ' + token });
                 },
                 removeClient: function removeClient(token, id) {
-                    return _this._client.del('/oidc/' + _this.name + '/registration', { client_id: id }, {}, { 'Authorization': 'Bearer ' + token });
+                    return _this._client.del('/oidc/' + _this.name + '/registration', { client_id: id }, { 'Authorization': 'Bearer ' + token });
                 }
             }
         });

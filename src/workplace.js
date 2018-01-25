@@ -113,13 +113,13 @@ export class Workplace {
                     return this._client.post(`/oidc/${this.name}/registration`, {}, data, {'Authorization': `Bearer ${token}`});
                 },
                 getClient: (token, id) => {
-                    return this._client.get(`/oidc/${this.name}/registration`, {client_id: id}, {}, {'Authorization': `Bearer ${token}`});
+                    return this._client.get(`/oidc/${this.name}/registration`, {client_id: id}, {'Authorization': `Bearer ${token}`});
                 },
                 updateClient: (token, id, data) => {
                     return this._client.post(`/oidc/${this.name}/registration`, {client_id: id}, data, {'Authorization': `Bearer ${token}`});
                 },
                 removeClient: (token, id) => {
-                    return this._client.del(`/oidc/${this.name}/registration`, {client_id: id}, {}, {'Authorization': `Bearer ${token}`});
+                    return this._client.del(`/oidc/${this.name}/registration`, {client_id: id}, {'Authorization': `Bearer ${token}`});
                 }
             }
         });
