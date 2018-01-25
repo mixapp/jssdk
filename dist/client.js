@@ -31,7 +31,7 @@ var Http = function () {
     _createClass(Http, [{
         key: 'get',
         value: function get(path, data, headers) {
-            return this._request('get', path, data, headers);
+            return this._request('get', path, data, null, headers);
         }
     }, {
         key: 'post',
