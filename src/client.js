@@ -26,7 +26,7 @@ export default class Http {
     }
 
     del(path, data, headers) {
-        return this._request('DELETE', path, data, headers);
+        return this._request('DELETE', path, data, null, headers);
     }
 
     setToken(token) {

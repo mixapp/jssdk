@@ -41,7 +41,7 @@ var Http = function () {
     }, {
         key: 'del',
         value: function del(path, data, headers) {
-            return this._request('DELETE', path, data, headers);
+            return this._request('DELETE', path, data, null, headers);
         }
     }, {
         key: 'setToken',
