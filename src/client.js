@@ -21,7 +21,7 @@ export default class Http {
         return this._request('get', path, data, null, headers);
     }
 
-    post(path, query, data, headers) {
+    post(path, query, data = {}, headers) {
         return this._request('POST', path, query, data, headers);
     }
 

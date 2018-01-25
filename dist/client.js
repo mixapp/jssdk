@@ -35,7 +35,10 @@ var Http = function () {
         }
     }, {
         key: 'post',
-        value: function post(path, query, data, headers) {
+        value: function post(path, query) {
+            var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+            var headers = arguments[3];
+
             return this._request('POST', path, query, data, headers);
         }
     }, {
