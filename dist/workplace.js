@@ -113,7 +113,7 @@ var Workplace = exports.Workplace = function () {
                         return _this._client.post('/v1/workplaces/' + _this.name + '/oidc', {}, data);
                     },
                     refreshToken: function refreshToken() {
-                        return _this._client.post('/v1/workplaces/' + _this.name + '/oidc/token');
+                        return _this._client.post('/v1/workplaces/' + _this.name + '/oidc/token', {}, {});
                     }
                 }
             }

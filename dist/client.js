@@ -75,7 +75,7 @@ var Http = function () {
             }
 
             var query = '';
-            if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
+            if (method.toLowerCase() === 'post' || method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
                 var _query = [];
                 for (var prop in params) {
                     _query.push(prop + '=' + params[prop]);
@@ -175,7 +175,7 @@ var Http = function () {
             var promise = new Promise(function (resolve, reject) {
 
                 var query = '';
-                if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
+                if (method.toLowerCase() === 'post' || method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
                     var _query = [];
                     for (var prop in params) {
                         _query.push(prop + '=' + params[prop]);

@@ -94,7 +94,7 @@ export class Workplace {
                         return this._client.post(`/v1/workplaces/${this.name}/oidc`, {}, data);
                     },
                     refreshToken: () => {
-                        return this._client.post(`/v1/workplaces/${this.name}/oidc/token`);
+                        return this._client.post(`/v1/workplaces/${this.name}/oidc/token`, {}, {});
                     }
                 }
             }

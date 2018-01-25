@@ -53,7 +53,7 @@ export default class Http {
         }
 
         var query = '';
-        if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
+        if (method.toLowerCase() === 'post' || method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
             let _query = [];
             for (let prop in params) {
                 _query.push(prop + '=' + params[prop])
@@ -152,7 +152,7 @@ export default class Http {
         const promise = new Promise((resolve, reject) => {
 
             var query = '';
-            if (method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
+            if (method.toLowerCase() === 'post' || method.toLowerCase() === 'get' || method.toLowerCase() === 'delete') {
                 let _query = [];
                 for (let prop in params) {
                     _query.push(prop + '=' + params[prop])
