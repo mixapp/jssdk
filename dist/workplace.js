@@ -231,6 +231,11 @@ var Workplace = exports.Workplace = function () {
             return this._client.post('/v1/workplaces/' + this.name + '/connectors', {}, model);
         }
     }, {
+        key: 'updateConnector',
+        value: function updateConnector(model) {
+            return this._client.post('/v1/workplaces/' + this.name + '/connectors/' + model.id, {}, model);
+        }
+    }, {
         key: 'removeConnector',
         value: function removeConnector(id) {
             return this._client.del('/v1/workplaces/' + this.name + '/connectors/' + id);

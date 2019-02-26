@@ -198,6 +198,10 @@ export class Workplace {
         return this._client.post(`/v1/workplaces/${this.name}/connectors`, {}, model);
     }
 
+    updateConnector(model) {
+        return this._client.post(`/v1/workplaces/${this.name}/connectors/${model.id}`, {}, model);
+    }
+
     removeConnector(id) {
         return this._client.del(`/v1/workplaces/${this.name}/connectors/${id}`);
     }
