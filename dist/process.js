@@ -136,6 +136,11 @@ var Process = exports.Process = function () {
             return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id, {});
         }
     }, {
+        key: 'setTransformRules',
+        value: function setTransformRules(source, target, rules) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + source + '/rules/' + target, {}, rules);
+        }
+    }, {
         key: 'setRelation',
         value: function setRelation(source, target) {
             return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + source + '/relation/' + target, {});
