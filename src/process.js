@@ -71,6 +71,11 @@ export class Process {
             .then(res => res.result);
     }
 
+    upgradeConnector(id) {
+      return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/upgrade', {}, data)
+          .then(res => res.result);
+    }
+
     moveConnector(id, x, y) {
         return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/move', {}, {
             positionX: x,
