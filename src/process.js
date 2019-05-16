@@ -23,7 +23,7 @@ export class Process {
                 return this;
             });
     }
-    
+
     getLogs(skip, limit) {
         return this._client.get('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/logs', {
             skip: skip,
@@ -52,24 +52,6 @@ export class Process {
     remove() {
         return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id);
     }
-
-    /*createVariable(data) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables', data)
-            .then(res => {
-                return res.result;
-            });
-    }
-
-    updateVariable(name, data) {
-        return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name, data)
-            .then(res => {
-                return res.result;
-            });
-    }
-
-    removeVariable(name) {
-        return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name);
-    }*/
 
     start(data) {
         return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/start', {}, data);
