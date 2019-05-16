@@ -23,14 +23,7 @@ export class Process {
                 return this;
             });
     }
-
-    getContext(skip, limit) {
-        return this._client.get('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/context', {
-            skip: skip,
-            limit: limit
-        });
-    }
-
+    
     getLogs(skip, limit) {
         return this._client.get('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/logs', {
             skip: skip,
