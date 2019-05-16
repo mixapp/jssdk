@@ -39,14 +39,6 @@ var Process = exports.Process = function () {
             });
         }
     }, {
-        key: 'getContext',
-        value: function getContext(skip, limit) {
-            return this._client.get('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/context', {
-                skip: skip,
-                limit: limit
-            });
-        }
-    }, {
         key: 'getLogs',
         value: function getLogs(skip, limit) {
             return this._client.get('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/logs', {
@@ -81,23 +73,6 @@ var Process = exports.Process = function () {
         value: function remove() {
             return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id);
         }
-
-        /*createVariable(data) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables', data)
-                .then(res => {
-                    return res.result;
-                });
-        }
-         updateVariable(name, data) {
-            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name, data)
-                .then(res => {
-                    return res.result;
-                });
-        }
-         removeVariable(name) {
-            return this._client.del('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/variables/' + name);
-        }*/
-
     }, {
         key: 'start',
         value: function start(data) {
@@ -119,6 +94,13 @@ var Process = exports.Process = function () {
         key: 'updateConnector',
         value: function updateConnector(id, data) {
             return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id, {}, data).then(function (res) {
+                return res.result;
+            });
+        }
+    }, {
+        key: 'upgradeConnector',
+        value: function upgradeConnector(id) {
+            return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/upgrade', {}, data).then(function (res) {
                 return res.result;
             });
         }
