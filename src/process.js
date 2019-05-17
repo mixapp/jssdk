@@ -72,7 +72,7 @@ export class Process {
     }
 
     upgradeConnector(id) {
-      return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/upgrade', {}, data)
+      return this._client.post('/v1/workplaces/' + this._workplace + '/processes/' + this.id + '/connectors/' + id + '/upgrade', {}, {})
           .then(res => res.result);
     }
 

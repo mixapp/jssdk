@@ -1,6 +1,6 @@
 {
   "name": "mixapp",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Mixapp.io Javascript SDK",
   "dependencies": {
     "gulp": "^3.0.0"
